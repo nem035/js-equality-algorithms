@@ -1,0 +1,68 @@
+body {
+	background: #e6eaed;
+	border: 0;
+	padding: 10px;
+}
+
+.author {
+	float: right;
+}
+
+.repo {
+	float: left;
+}
+
+h2 {
+	text-align: center;
+}
+
+.grid-flex-cell {
+	padding: 10px;
+}
+
+.card {
+	background: white;
+	box-shadow: 1px 1px 1px 1px #d3d3d3;
+	font-family: monospace;
+	padding: 10px;
+	text-align: center;
+}
+
+.button-run {
+	width: 100%;
+}
+
+.card.output {
+}
+
+.step {
+	text-align: left;
+	overflow-x: scroll;
+}
+
+.step .value {
+	font-family: monospace;
+	font-weight: bold;
+}
+
+.step.operation {
+	background: #FFEED7;
+	margin: 20px 0;
+}
+
+.step.result {
+	margin-top: 10px;
+}
+
+.step.result.false {
+	background: #FFC7D8;
+}
+
+.step.result.true {
+	background: #C6EBD3;
+}
+
+.step.operation,
+.step.result {
+	border: 1px solid #e3e3e3;
+}

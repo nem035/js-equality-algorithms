@@ -1,8 +1,60 @@
 <html>
   <head>
-    <link href="./style.css" rel="stylesheet" type="text/css">
+    <link href="./style/yeti.min.css" rel="stylesheet" type="text/css">
+    <link href="./style/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+    <div class="container">
+      <div class="repo">Code on <a href="https://www.github.com/nem035/js-equality-algorithms">Github</a></div>
+      <div class="author">Made by <a href="https://www.twitter.com/nem035">nem035</a></div>
+      <h2>JavaScript equality algorithms</h2>
+
+      <div class="grid-flex-container">
+        <div class="grid-flex-cell">
+          <div class="card">
+            <h4 class="text-left">Value 1</h4>
+            <select class="values value1">
+
+            </select>
+          </div>
+        </div>
+        <div class="grid-flex-cell">
+          <div class="card">
+            <h4>Operation</h4>
+            <select class="algorithm">
+              <option value="doubleEquals">==</option>
+              <option value="tripleEquals">===</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-flex-cell">
+          <div class="card">
+            <h4 class="text-left">Value 2</h4>
+            <select class="values value2">
+
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-flex-container">
+        <div class="grid-flex-cell">
+          <button type="button" class="button-run button button-large" disabled>
+            Run
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-flex-container">
+        <div class="grid-flex-cell">
+          <div class="card output">
+            <h4>Algorithm</h4>
+            <ol class="steps">
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="./code/engine.js"></script>
 
@@ -13,6 +65,8 @@
     <script>
       if (testES5()) {
         console.info('ES5 tests passed');
+      } else {
+        console.error('ES5 tests failed')
       }
     </script>
 
@@ -24,11 +78,15 @@
     <script>
     if (testES6()) {
       console.info('ES6 tests passed');
+    } else {
+      console.error('ES6 tests failed')
     }
     </script>
 
-    <script src="./code/runners/es5/double_equals.js"></script>
-    <script src="./code/runners/es5/triple_equals.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+    <script src="./code/generators/es5/double_equals.js"></script>
+    <script src="./code/generators/es5/triple_equals.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>
