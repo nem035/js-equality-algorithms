@@ -80,11 +80,13 @@ function yToHTML(y) {
 }
 
 function valueToText(value) {
-  if (isUndefined(value)) return 'undefined';
   if (isNaN(value)) return 'NaN';
   if (isDate(value)) return 'new Date()';
-  if (isFunction(value)) return value.toString();
-  return JSON.stringify(value);
+  if (isUndefined(value)) return 'undefined';
+  return JSON.stringify(value, function(key, value) {
+    if (isFunction(value)) return String(value);
+    return value;
+  }, 2);
 }
 
 function valueToHTML(text, type) {
@@ -116,7 +118,7 @@ function scrollToBottom(elem) {
 }
 
 function buildValues() {
-  return testCasesES5.map(function(value, idx) {
+  return testCasesES5.slice(0, 22).map(function(value, idx) {
     return {
       id: `${idx}`,
       text: valueToText(value),
