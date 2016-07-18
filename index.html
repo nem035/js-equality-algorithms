@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <link href="./style.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <script src="./code/engine.js"></script>
+
+    <script src="./code/es5/double_equals.js"></script>
+    <script src="./code/es5/triple_equals.js"></script>
+    <script src="./tests/es5/cases.js"></script>
+    <script src="./tests/es5/test.js"></script>
+    <script>
+      if (testES5()) {
+        console.info('ES5 tests passed');
+      }
+    </script>
+
+    <script src="./code/es6/double_equals.js"></script>
+    <script src="./code/es6/triple_equals.js"></script>
+    <script src="./tests/es6/cases.js"></script>
+    <script src="./tests/es6/test.js"></script>
+
+    <script>
+    if (testES6()) {
+      console.info('ES6 tests passed');
+    }
+    </script>
+
+    <script src="./code/runners/es5/double_equals.js"></script>
+    <script src="./code/runners/es5/triple_equals.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
