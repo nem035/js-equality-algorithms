@@ -1,75 +1,6 @@
 $(() => {
 
-  const values = [{
-    id: '0',
-    value: null
-  }, {
-    id: '1',
-    value: undefined
-  }, {
-    id: '2',
-    value: 0
-  }, {
-    id: '3',
-    value: NaN
-  }, {
-    id: '4',
-    value: ''
-  }, {
-    id: '5',
-    value: false
-  }, {
-    id: '6',
-    value: true
-  }, {
-    id: '7',
-    value: 1
-  }, {
-    id: '8',
-    value: -1
-  }, {
-    id: '9',
-    value: 0
-  }, {
-    id: '10',
-    value: -0
-  }, {
-    id: '11',
-    value: '0'
-  }, {
-    id: '12',
-    value: '1'
-  }, {
-    id: '13',
-    value: []
-  }, {
-    id: '14',
-    value: [0]
-  }, {
-    id: '15',
-    value: [null]
-  }, {
-    id: '16',
-    value: [undefined]
-  }, {
-    id: '17',
-    value: ['']
-  }, {
-    id: '18',
-    value: [false]
-  }, {
-    id: '19',
-    value: [1, 2]
-  }, {
-    id: '20',
-    value: {}
-  }, {
-    id: '21',
-    value: { a: 1 }
-  }].map(function(v) {
-    v.text = valueToText(v.value);
-    return v;
-  });
+  const values = buildValues();
 
   const algorithms = [{
       id: 'doubleEquals',
@@ -111,11 +42,11 @@ function step(runner) {
   if (isString(value)) {
     showStep(value);
     return false;
-  } else if (isBoolean(value)) {
-    showResult(value);
-    return false;
   }
-  return true;
+  if (isBoolean(value)) {
+    showResult(value);
+    return true;
+  }
 }
 
 function showOperation(text) {
@@ -125,6 +56,7 @@ function showOperation(text) {
 function showStep(result) {
   const step = buildStep(result);
   $('.steps').append(step);
+  scrollToBottom(document.body);
   return step;
 }
 
@@ -148,7 +80,9 @@ function yToHTML(y) {
 }
 
 function valueToText(value) {
-  return isUndefined(value) ? 'undefined' : JSON.stringify(value);
+  if (isUndefined(value)) return 'undefined';
+  if (isNaN(value)) return 'NaN';
+  return JSON.stringify(value);
 }
 
 function valueToHTML(text, type) {
@@ -172,4 +106,41 @@ function buildValueLists(values) {
 function get(values, type) {
   const id = $(`.${type}`).val();
   return values.find(v => v.id === id);
+}
+
+function scrollToBottom(elem) {
+  const $elem = $(elem);
+  $elem.scrollTop($elem.prop('scrollHeight'));
+}
+
+function buildValues() {
+  return [
+    null,
+    undefined,
+    0,
+    NaN,
+    '',
+    false,
+    true,
+    1,
+    -1,
+    -0,
+    '0',
+    '1',
+    [],
+    [0],
+    [null],
+    [undefined],
+    [''],
+    [false],
+    [1, 2],
+    {},
+    { a: 1 }
+  ].map(function(value, idx) {
+    return {
+      id: `${idx}`,
+      text: valueToText(value),
+      value
+    };
+  });
 }
