@@ -6,11 +6,11 @@
 
 ## Algorithms
 
-The algorithms are in the `/code/es5` folder of this repo. If you want to have a quick look, here's a [Gist with algorithm implementations](https://gist.github.com/nem035/9f195e15b83d464d8cce8768f93b9e90)
+The algorithms are in the `/code/algorithms` folder of this repo. If you want to have a quick look, here's a [Gist with algorithm implementations](https://gist.github.com/nem035/9f195e15b83d464d8cce8768f93b9e90)
 
 ### ==
 
-Implementation based on the [ES5 Spec](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3)
+Implementation based on the Spec](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3)
 
 ```javascript
 function doubleEquals(x, y) {
@@ -79,7 +79,7 @@ function doubleEquals(x, y) {
 
 ### ===
 
-Implementation based on the [ES5 Spec](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6)
+Implementation based on the [Spec](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6)
 
 ```javascript
 function tripleEquals(x, y) {

@@ -2,18 +2,18 @@ $(() => {
 
   setupNavTabs();
 
-  const values = getValues('primitive');
-  const algorithms = getAlgorithms();
-
-  buildValueLists(values);
+  initValueLists();
   $('.button-run').prop('disabled', '');
 
   $('.button-run').click(function() {
     $('.button-run').prop('disabled', 'true');
     $('.steps').empty();
 
-    const x = Object.assign({}, get(values, 'x'));
-    const y = Object.assign({}, get(values, 'y'));
+    const algorithms = getAlgorithms();
+    const xDataType = getDataType('x');
+    const yDataType = getDataType('y');
+    const x = Object.assign({}, get(getValues(xDataType), 'x'));
+    const y = Object.assign({}, get(getValues(yDataType), 'y'));
     const algorithm = get(algorithms, 'algorithm');
 
     run(x, y, algorithm);
@@ -89,7 +89,8 @@ function valueToHTML(text, type) {
   return `<span class="value ${type}">${text}</span>`
 }
 
-function buildValueLists(values) {
+function initValueLists() {
+  const values = getValues('primitive');
   buildValueList('x', values);
   buildValueList('y', values);
 }
@@ -144,21 +145,21 @@ function getValues(dataType) {
 }
 
 function getPrimitives() {
-  return testCasesES5.slice(0, 22);
+  return testCases.slice(0, 22);
 }
 
 function getNonPrimitives() {
-  return testCasesES5.slice(22);
+  return testCases.slice(22);
 }
 
 function getAlgorithms() {
   return [{
       id: 'doubleEquals',
-      method: doubleEqualsGeneratorES5,
+      method: doubleEqualsGenerator,
       skipFirstStep: false
   }, {
       id: 'tripleEquals',
-      method: tripleEqualsGeneratorES5,
+      method: tripleEqualsGenerator,
       skipFirstStep: false
   }];
 }
@@ -176,4 +177,8 @@ function setupNavTab(type) {
     const values = getValues(dataType);
     buildValueList(type, values);
   });
+}
+
+function getDataType(type) {
+  return $(`.nav-wrapper.nav-wrapper-${type} .tabs a.current-item`).attr('data-type');
 }

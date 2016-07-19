@@ -1,6 +1,6 @@
-// An implementation of the triple equals (===) algorithm in JavaScript ES5
+// An implementation of the triple equals (===) algorithm in JavaScript 
 // Spec: http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6
-function tripleEqualsES5(x, y) {
+function tripleEquals(x, y) {
   if (!areSameType(x, y)) {
     return false;
   }

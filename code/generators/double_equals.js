@@ -1,4 +1,4 @@
-function *doubleEqualsGeneratorES5(x, y) {
+function *doubleEqualsGenerator(x, y) {
 
   yield `Operation: ${xToHTML(x)} == ${yToHTML(y)}`;
 
@@ -6,7 +6,7 @@ function *doubleEqualsGeneratorES5(x, y) {
   if (areSameType(x.value, y.value)) {
 
     return run(x, y, {
-      method: tripleEqualsGeneratorES5,
+      method: tripleEqualsGenerator,
       skipFirstStep: true
     });
   } else {
@@ -27,7 +27,7 @@ function *doubleEqualsGeneratorES5(x, y) {
       y.value = toNumber(y.value);
       y.text = valueToText(y.value);
       return run(x, y, {
-        method: doubleEqualsGeneratorES5
+        method: doubleEqualsGenerator
       });
     }
 
@@ -37,7 +37,7 @@ function *doubleEqualsGeneratorES5(x, y) {
       x.value = toNumber(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {
-        method: doubleEqualsGeneratorES5
+        method: doubleEqualsGenerator
       });
     }
 
@@ -47,7 +47,7 @@ function *doubleEqualsGeneratorES5(x, y) {
       x.value = toNumber(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {
-        method: doubleEqualsGeneratorES5
+        method: doubleEqualsGenerator
       });
     }
 
@@ -57,7 +57,7 @@ function *doubleEqualsGeneratorES5(x, y) {
       y.value = toNumber(y.value);
       y.text = valueToText(y.value);
       return run(x, y, {
-        method: doubleEqualsGeneratorES5
+        method: doubleEqualsGenerator
       });
     }
 
@@ -67,7 +67,7 @@ function *doubleEqualsGeneratorES5(x, y) {
       y.value = toPrimitive(y.value);
       y.text = valueToText(y.value);
       return run(x, y, {
-        method: doubleEqualsGeneratorES5
+        method: doubleEqualsGenerator
       });
     }
 
@@ -77,7 +77,7 @@ function *doubleEqualsGeneratorES5(x, y) {
       x.value = toPrimitive(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {
-        method: doubleEqualsGeneratorES5
+        method: doubleEqualsGenerator
       });
     }
   }

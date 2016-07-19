@@ -1,7 +1,7 @@
-function *tripleEqualsGeneratorES5(x, y, skip = false) {
+function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
   yield `Operation: ${xToHTML(x)} === ${yToHTML(y)}`;
 
-  if (!skip) {
+  if (!skipFirstStep) {
     yield `Checking if <strong>x</strong> and <strong>y</strong> have a different type`;
     if (!areSameType(x.value, y.value)) {
       return false;

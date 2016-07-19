@@ -1,16 +1,16 @@
-function testES5() {
+function test() {
 
   var EXCEPTION = 'hasException';
 
   var tests = [{
-    algo: doubleEqualsES5,
+    algo: doubleEquals,
     algoName: 'doubleEquals',
     operation: function(x, y) {
       return x == y;
     },
     operator: '=='
   }, {
-    algo: tripleEqualsES5,
+    algo: tripleEquals,
     algoName: 'tripleEquals',
     operation: function(x, y) {
       return x === y;
@@ -20,8 +20,8 @@ function testES5() {
 
   var allPassed = true;
   tests.forEach(function(test) {
-    testCasesES5.forEach(function(case1) {
-      testCasesES5.forEach(function(case2) {
+    testCases.forEach(function(case1) {
+      testCases.forEach(function(case2) {
 
         var result;
         try {
