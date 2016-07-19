@@ -80,7 +80,7 @@ function valueToText(value) {
   if (isUndefined(value)) return 'undefined';
   if (isNegativeZero(value)) return '-0';
   return JSON.stringify(value, function(key, value) {
-    if (isFunction(value)) return String(value);
+    if (isFunction(value)) return String(value).split('\n').join(' ');
     return value;
   }, 2);
 }
