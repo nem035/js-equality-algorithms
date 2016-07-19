@@ -6,7 +6,7 @@
 
 ## Algorithms
 
-The algorithms are in the `/code/algorithms` folder of this repo. If you want to have a quick look, here's a [Gist with algorithm implementations](https://gist.github.com/nem035/9f195e15b83d464d8cce8768f93b9e90)
+The algorithms are in the [/code/algorithms](https://github.com/nem035/js-equality-algorithms/tree/gh-pages/code/algorithms) folder of this repo. If you want to have a quick look, here's a [Gist with algorithm implementations](https://gist.github.com/nem035/9f195e15b83d464d8cce8768f93b9e90)
 
 ### ==
 
