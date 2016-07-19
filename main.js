@@ -169,11 +169,11 @@ function setupNavTabs() {
 }
 
 function setupNavTab(type) {
-  const tabs = $(`.nav-wrapper.nav-wrapper-${type} .tabs a`);
-  tabs.click(function() {
-    tabs.toggleClass('current-item');
-    const valueType = tabs.find('.current-item').attr('data-type');
-    buildValueLists(values);
-
+  const tabs = $(`.nav-wrapper.nav-wrapper-${type} .tabs`);
+  tabs.find('a').click(function() {
+    tabs.find('a').toggleClass('current-item');
+    const dataType = tabs.find('a.current-item').attr('data-type');
+    const values = getValues(dataType);
+    buildValueList(type, values);
   });
 }
