@@ -7,7 +7,7 @@ function *doubleEqualsGeneratorES5(x, y) {
 
     return run(x, y, {
       method: tripleEqualsGeneratorES5,
-      skip: true
+      skipFirstStep: true
     });
   } else {
 

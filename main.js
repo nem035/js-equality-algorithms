@@ -1,14 +1,7 @@
 $(() => {
 
   const values = buildValues();
-
-  const algorithms = [{
-      id: 'doubleEquals',
-      method: doubleEqualsGeneratorES5
-  }, {
-      id: 'tripleEquals',
-      method: tripleEqualsGeneratorES5
-  }];
+  const algorithms = getAlgorithms();
 
   buildValueLists(values);
   $('.button-run').prop('disabled', '');
@@ -26,7 +19,7 @@ $(() => {
 });
 
 function run(x, y, algorithm) {
-  const runner = algorithm.method(x, y, algorithm.skip);
+  const runner = algorithm.method(x, y, algorithm.skipFirstStep);
 
   showOperation(runner.next().value);
   const interval = setInterval(() => {
@@ -39,14 +32,14 @@ function run(x, y, algorithm) {
 
 function step(runner) {
   const { value } = runner.next();
-  if (isString(value)) {
-    showStep(value);
-    return false;
-  }
   if (isBoolean(value)) {
     showResult(value);
     return true;
   }
+  if (isString(value)) {
+    showStep(value);
+  }
+  return false;
 }
 
 function showOperation(text) {
@@ -125,4 +118,16 @@ function buildValues() {
       value
     };
   });
+}
+
+function getAlgorithms() {
+  return [{
+      id: 'doubleEquals',
+      method: doubleEqualsGeneratorES5,
+      skipFirstStep: false
+  }, {
+      id: 'tripleEquals',
+      method: tripleEqualsGeneratorES5,
+      skipFirstStep: false
+  }];
 }
