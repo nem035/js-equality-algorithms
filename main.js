@@ -79,10 +79,11 @@ function valueToText(value) {
   if (isDate(value)) return 'new Date()';
   if (isUndefined(value)) return 'undefined';
   if (isNegativeZero(value)) return '-0';
+  if (value === '') return '""';
   return JSON.stringify(value, function(key, value) {
     if (isFunction(value)) return String(value).split('\n').join(' ');
     return value;
-  }, 2);
+  }, 2).split('"').join('');
 }
 
 function valueToHTML(text, type) {
