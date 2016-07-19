@@ -145,11 +145,11 @@ function getValues(dataType) {
 }
 
 function getPrimitives() {
-  return testCases.slice(0, 22);
+  return testCasePrimitives.slice();
 }
 
 function getNonPrimitives() {
-  return testCases.slice(22);
+  return testCaseNonPrimitives.slice();
 }
 
 function getAlgorithms() {

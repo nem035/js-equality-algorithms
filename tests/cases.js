@@ -11,7 +11,10 @@ var testCasePrimitives = [
   0,
   -0,
   '0',
-  '1',
+  '1'
+];
+
+var testCaseNonPrimitives = [
   [],
   [0],
   [null],
@@ -20,13 +23,10 @@ var testCasePrimitives = [
   [false],
   [1, 2],
   {},
-  { a: 1 }
-];
-
-var testCaseNonPrimitives = [
+  { a: 1 },
   {
     valueOf: function() {
-      return '{Custom string from valueOf}';
+      return 'Custom string from valueOf';
     }
   },
   {
@@ -34,17 +34,17 @@ var testCaseNonPrimitives = [
       return {};
     },
     toString: function() {
-      return '{Custom string from toString}';
+      return 'Custom string from toString';
     }
   },
   {
     toString: function() {
-      return '{Custom string from toString}';
+      return 'Custom string from toString';
     }
   },
   {
     toString: function() {
-      return '{Custom string from toString}';
+      return 'Custom string from toString';
     },
     valueOf: function() {
       return {};
