@@ -18,6 +18,13 @@ h2 {
 
 .grid-flex-cell {
 	padding: 10px;
+	text-align: center;
+}
+
+.grid-flex-cell.middle {
+	display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card {
@@ -25,7 +32,10 @@ h2 {
 	box-shadow: 1px 1px 1px 1px #d3d3d3;
 	font-family: monospace;
 	padding: 10px;
-	text-align: center;
+}
+
+.tabs {
+	font-size: .9em;
 }
 
 .button-run {

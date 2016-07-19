@@ -1,5 +1,7 @@
 $(() => {
 
+  setupNavTabs();
+
   const values = buildValues();
   const algorithms = getAlgorithms();
 
@@ -131,4 +133,16 @@ function getAlgorithms() {
       method: tripleEqualsGeneratorES5,
       skipFirstStep: false
   }];
+}
+
+function setupNavTabs() {
+  setupNavTab('x');
+  setupNavTab('y');
+}
+
+function setupNavTab(type) {
+  const tabs = $(`.nav-wrapper.nav-wrapper-${type} .tabs a`);
+  tabs.click(function() {
+    tabs.toggleClass('current-item');
+  });
 }
