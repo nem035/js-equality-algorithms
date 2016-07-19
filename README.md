@@ -10,7 +10,7 @@ The algorithms are in the `/code/algorithms` folder of this repo. If you want to
 
 ### ==
 
-Implementation based on the Spec](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3)
+Implementation based on the [Spec](http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3)
 
 ```javascript
 function doubleEquals(x, y) {
