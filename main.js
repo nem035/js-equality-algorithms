@@ -191,8 +191,8 @@ function getDataType(type) {
 
 function toPrimitiveCoercionMethod(obj) {
   if (isDate(obj)) {
-    return isFunction(obj.toString) ? 'toString' : 'valueOf';
+    return obj.hasOwnProperty(obj.toString) && isFunction(obj.toString) ? 'toString' : 'valueOf';
   } else {
-    return isFunction(obj.valueOf) ? 'valueOf' : 'toString';
+    return obj.hasOwnProperty(obj.valueOf) && isFunction(obj.valueOf) ? 'valueOf' : 'toString';
   }
 }
