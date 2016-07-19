@@ -79,7 +79,7 @@ function valueToText(value) {
   if (isDate(value)) return 'new Date()';
   if (isUndefined(value)) return 'undefined';
   if (isNegativeZero(value)) return '-0';
-  if (isString(value)) return `"${value}"`;
+  if (isString(value)) return `'${value}'`;
   return JSON.stringify(value, function(key, value) {
     if (isFunction(value)) {
       return String(value)
