@@ -45,6 +45,12 @@ function areEqual(x, y) {
 }
 
 function areEqualNumberValues(x, y) {
+  if (isNegativeZero(x) && isPositiveZero(y)) {
+    return false;
+  }
+  if (isPositiveZero(x) && isNegativeZero(y)) {
+    return false;
+  }
   return areEqual(x, y);
 }
 

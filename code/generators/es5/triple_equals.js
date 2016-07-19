@@ -2,46 +2,46 @@ function *tripleEqualsGeneratorES5(x, y, skip = false) {
   yield `Operation: ${xToHTML(x)} === ${yToHTML(y)}`;
 
   if (!skip) {
-    yield `Checking if x and y have a different type`;
+    yield `Checking if <strong>x</strong> and <strong>y</strong> have a different type`;
     if (!areSameType(x.value, y.value)) {
       return false;
     }
   }
 
-  yield `Checking if x is undefined`;
+  yield `Checking if <strong>x</strong> is undefined`;
   if (isUndefined(x.value)) {
     return true;
   }
 
-  yield `Checking if x is null`;
+  yield `Checking if <strong>x</strong> is null`;
   if (isNull(x.value)) {
     return true;
   }
 
-  yield `Checking if x is a number`;
+  yield `Checking if <strong>x</strong> is a number`;
   if (isNumber(x.value)) {
 
-    yield `Checking if x is NaN`;
+    yield `Checking if <strong>x</strong> is NaN`;
     if (isNaN(x.value)) {
       return false;
     }
 
-    yield `Checking if y is NaN`;
+    yield `Checking if <strong>y</strong> is NaN`;
     if (isNaN(y.value)) {
       return false;
     }
 
-    yield `Checking if x and y have equal Number values`;
+    yield `Checking if <strong>x</strong> and <strong>y</strong> have equal Number values`;
     if (areEqualNumberValues(x.value, y.value)) {
       return true;
     }
 
-    yield `Checking if x is +0 and y is -0`;
+    yield `Checking if <strong>x</strong> is +0 and <strong>y</strong> is -0`;
     if (isPositiveZero(x.value) && isNegativeZero(y.value)) {
       return true;
     }
 
-    yield `Checking if x is -0 and y is +0`;
+    yield `Checking if <strong>x</strong> is -0 and <strong>y</strong> is +0`;
     if (isNegativeZero(x.value) && isPositiveZero(y.value)) {
       return true;
     }
@@ -49,10 +49,10 @@ function *tripleEqualsGeneratorES5(x, y, skip = false) {
     return false;
   }
 
-  yield `Checking if x is a string`;
+  yield `Checking if <strong>x</strong> is a string`;
   if (isString(x.value)) {
 
-    yield `Comparing character sequences of x and y`;
+    yield `Comparing character sequences of <strong>x</strong> and y`;
     if (areAllCharsEqualInOrder(x.value, y.value)) {
       return true;
     }
@@ -60,10 +60,10 @@ function *tripleEqualsGeneratorES5(x, y, skip = false) {
     return false;
   }
 
-  yield `Checking if x is a boolean`;
+  yield `Checking if <strong>x</strong> is a boolean`;
   if (isBoolean(x.value)) {
 
-    yield `Checking if x and y are both true or both false`;
+    yield `Checking if <strong>x</strong> and <strong>y</strong> are both true or both false`;
     if (areBothTrue(x.value, y.value) || areBothFalse(x.value, y.value)) {
       return true;
     }
@@ -71,7 +71,7 @@ function *tripleEqualsGeneratorES5(x, y, skip = false) {
     return false;
   }
 
-  yield `Checking if x and y are the same object`;
+  yield `Checking if <strong>x</strong> and <strong>y</strong> are the same object`;
   if (areEqualReferences(x.value, y.value)) {
     return true;
   }
