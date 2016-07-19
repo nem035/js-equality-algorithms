@@ -81,9 +81,14 @@ function valueToText(value) {
   if (isNegativeZero(value)) return '-0';
   if (value === '') return '""';
   return JSON.stringify(value, function(key, value) {
-    if (isFunction(value)) return String(value).split('\n').join(' ');
+    if (isFunction(value)) {
+      return String(value)
+        .split('\n')
+        .join('')
+        .replace(/\s+/g, ' ');
+    }
     return value;
-  }, 2).split('"').join('');
+  }, 4).split('"').join('');
 }
 
 function valueToHTML(text, type) {
@@ -182,4 +187,12 @@ function setupNavTab(type) {
 
 function getDataType(type) {
   return $(`.nav-wrapper.nav-wrapper-${type} .tabs a.current-item`).attr('data-type');
+}
+
+function toPrimitiveCoercionMethod(obj) {
+  if (isDate(obj)) {
+    return isFunction(obj.toString) ? 'toString' : 'valueOf';
+  } else {
+    return isFunction(obj.valueOf) ? 'valueOf' : 'toString';
+  }
 }

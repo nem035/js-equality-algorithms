@@ -16,6 +16,12 @@ h2 {
 	text-align: center;
 }
 
+pre {
+	background: transparent;
+	display: inline;
+	font-weight: normal;
+}
+
 .grid-flex-cell {
 	padding: 10px;
 	text-align: center;
