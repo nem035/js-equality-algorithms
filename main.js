@@ -2,7 +2,7 @@ $(() => {
 
   setupNavTabs();
 
-  const values = buildValues();
+  const values = getValues('primitive');
   const algorithms = getAlgorithms();
 
   buildValueLists(values);
@@ -12,11 +12,11 @@ $(() => {
     $('.button-run').prop('disabled', 'true');
     $('.steps').empty();
 
-    const value1 = Object.assign({}, get(values, 'value1'));
-    const value2 = Object.assign({}, get(values, 'value2'));
+    const x = Object.assign({}, get(values, 'x'));
+    const y = Object.assign({}, get(values, 'y'));
     const algorithm = get(algorithms, 'algorithm');
 
-    run(value1, value2, algorithm)
+    run(x, y, algorithm);
   });
 });
 
@@ -90,16 +90,18 @@ function valueToHTML(text, type) {
 }
 
 function buildValueLists(values) {
+  buildValueList('x', values);
+  buildValueList('y', values);
+}
 
-  $('.values').each((idx, valList) => {
-    const $valList = $(valList);
-
-    values.forEach((value) => {
-      const $option = $('<option></option>');
-      $option.attr('value', value.id);
-      $option.text(value.text);
-      $valList.append($option);
-    });
+function buildValueList(type, values) {
+  const $valList = $(`.values.${type}`);
+  $valList.empty();
+  values.forEach((value) => {
+    const $option = $('<option></option>');
+    $option.attr('value', value.id);
+    $option.text(value.text);
+    $valList.append($option);
   });
 }
 
@@ -113,14 +115,40 @@ function scrollToBottom(elem) {
   $elem.scrollTop($elem.prop('scrollHeight'));
 }
 
-function buildValues() {
-  return testCasesES5.slice(0, 22).map(function(value, idx) {
-    return {
-      id: `${idx}`,
-      text: valueToText(value),
-      value
-    };
-  });
+function valueBuilderFactory(dataType) {
+  let values;
+  const temp = (dataType === 'primitive') ? getPrimitives() : getNonPrimitives();
+
+  return function build() {
+    if (!isUndefined(values)) {
+      return values;
+    }
+
+    values = temp.map(function(value, idx) {
+      return {
+        id: `${idx}`,
+        text: valueToText(value),
+        value
+      };
+    });
+
+    return values;
+  };
+}
+
+const getPrimitiveValues = valueBuilderFactory('primitive');
+const getNonPrimitiveValues = valueBuilderFactory('non-primitive');
+
+function getValues(dataType) {
+  return (dataType === 'primitive') ? getPrimitiveValues() : getNonPrimitiveValues();
+}
+
+function getPrimitives() {
+  return testCasesES5.slice(0, 22);
+}
+
+function getNonPrimitives() {
+  return testCasesES5.slice(22);
 }
 
 function getAlgorithms() {
@@ -144,5 +172,8 @@ function setupNavTab(type) {
   const tabs = $(`.nav-wrapper.nav-wrapper-${type} .tabs a`);
   tabs.click(function() {
     tabs.toggleClass('current-item');
+    const valueType = tabs.find('.current-item').attr('data-type');
+    buildValueLists(values);
+
   });
 }
