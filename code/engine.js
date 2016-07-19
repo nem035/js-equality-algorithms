@@ -99,7 +99,7 @@ function isPositiveZero(x) {
 }
 
 function isObject(x) {
-  return areEqual(type(x), 'object') || isFunction(x) || isDate(x);
+  return areEqual(type(x), 'object') || Array.isArray(x) || isFunction(x) || isDate(x);
 }
 
 function isNull(x) {
