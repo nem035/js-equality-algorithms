@@ -2,7 +2,7 @@ function *doubleEqualsGenerator(x, y) {
 
   yield `Operation: ${xToHTML(x)} == ${yToHTML(y)}`;
 
-  yield `Checking if <strong>x</strong> and <strong>y</strong> have the same type`;
+  yield `Checking if <code>x</code> and <code>y</code> have the same type`;
   if (areSameType(x.value, y.value)) {
 
     return run(x, y, {
@@ -11,19 +11,19 @@ function *doubleEqualsGenerator(x, y) {
     });
   } else {
 
-    yield `Checking if <strong>x</strong> is null and <strong>y</strong> is undefined`;
+    yield `Checking if <code>x</code> is null and <code>y</code> is undefined`;
     if (isNull(x.value) && isUndefined(y.value)) {
       return true;
     }
 
-    yield `Checking if <strong>x</strong> is undefined and <strong>y</strong> is null`;
+    yield `Checking if <code>x</code> is undefined and <code>y</code> is null`;
     if (isUndefined(x.value) && isNull(y.value)) {
       return true;
     }
 
-    yield `Checking if <strong>x</strong> is a number and <strong>y</strong> is a string`;
+    yield `Checking if <code>x</code> is a number and <code>y</code> is a string`;
     if (isNumber(x.value) && isString(y.value)) {
-      yield `Coercing <strong>y</strong> to a number`;
+      yield `Coercing <code>y</code> to a number`;
       y.value = toNumber(y.value);
       y.text = valueToText(y.value);
       return run(x, y, {
@@ -31,9 +31,9 @@ function *doubleEqualsGenerator(x, y) {
       });
     }
 
-    yield `Checking if <strong>x</strong> is a string and <strong>y</strong> is a number`;
+    yield `Checking if <code>x</code> is a string and <code>y</code> is a number`;
     if (isString(x.value) && isNumber(y.value)) {
-      yield `Coercing <strong>x</strong> to a number`;
+      yield `Coercing <code>x</code> to a number`;
       x.value = toNumber(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {
@@ -41,9 +41,9 @@ function *doubleEqualsGenerator(x, y) {
       });
     }
 
-    yield `Checking if <strong>x</strong> is a boolean`;
+    yield `Checking if <code>x</code> is a boolean`;
     if (isBoolean(x.value)) {
-      yield `Coercing <strong>x</strong> to a number`;
+      yield `Coercing <code>x</code> to a number`;
       x.value = toNumber(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {
@@ -51,9 +51,9 @@ function *doubleEqualsGenerator(x, y) {
       });
     }
 
-    yield `Checking if <strong>y</strong> is a boolean`;
+    yield `Checking if <code>y</code> is a boolean`;
     if (isBoolean(y.value)) {
-      yield `Coercing <strong>y</strong> to a number`;
+      yield `Coercing <code>y</code> to a number`;
       y.value = toNumber(y.value);
       y.text = valueToText(y.value);
       return run(x, y, {
@@ -61,9 +61,10 @@ function *doubleEqualsGenerator(x, y) {
       });
     }
 
-    yield `Checking if <strong>x</strong> is a string or a number and <strong>y</strong> is an object`;
+    yield `Checking if <code>x</code> is a string or a number and <code>y</code> is an object`;
     if (isStringOrNumber(x.value) && isObject(y.value)) {
-      yield `Coercing <strong>y</strong> to a primitive`;
+      let method = isDate(y.value) ? 'toString' : 'valueOf';
+      yield `Coercing <code>y</code> to a primitive using <code>${method}</code>`;
       y.value = toPrimitive(y.value);
       y.text = valueToText(y.value);
       return run(x, y, {
@@ -71,9 +72,9 @@ function *doubleEqualsGenerator(x, y) {
       });
     }
 
-    yield `Checking if <strong>x</strong> is an object and <strong>y</strong> is a string or a number`;
+    yield `Checking if <code>x</code> is an object and <code>y</code> is a string or a number`;
     if (isObject(x.value) && isStringOrNumber(y.value)) {
-      yield `Coercing <strong>x</strong> to a primitive`;
+      yield `Coercing <code>x</code> to a primitive`;
       x.value = toPrimitive(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {

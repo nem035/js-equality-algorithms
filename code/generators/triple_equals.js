@@ -2,46 +2,46 @@ function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
   yield `Operation: ${xToHTML(x)} === ${yToHTML(y)}`;
 
   if (!skipFirstStep) {
-    yield `Checking if <strong>x</strong> and <strong>y</strong> have a different type`;
+    yield `Checking if <code>x</code> and <code>y</code> have a different type`;
     if (!areSameType(x.value, y.value)) {
       return false;
     }
   }
 
-  yield `Checking if <strong>x</strong> is undefined`;
+  yield `Checking if <code>x</code> is undefined`;
   if (isUndefined(x.value)) {
     return true;
   }
 
-  yield `Checking if <strong>x</strong> is null`;
+  yield `Checking if <code>x</code> is null`;
   if (isNull(x.value)) {
     return true;
   }
 
-  yield `Checking if <strong>x</strong> is a number`;
+  yield `Checking if <code>x</code> is a number`;
   if (isNumber(x.value)) {
 
-    yield `Checking if <strong>x</strong> is NaN`;
+    yield `Checking if <code>x</code> is NaN`;
     if (isNaN(x.value)) {
       return false;
     }
 
-    yield `Checking if <strong>y</strong> is NaN`;
+    yield `Checking if <code>y</code> is NaN`;
     if (isNaN(y.value)) {
       return false;
     }
 
-    yield `Checking if <strong>x</strong> and <strong>y</strong> have equal Number values`;
+    yield `Checking if <code>x</code> and <code>y</code> have equal Number values`;
     if (areEqualNumberValues(x.value, y.value)) {
       return true;
     }
 
-    yield `Checking if <strong>x</strong> is +0 and <strong>y</strong> is -0`;
+    yield `Checking if <code>x</code> is +0 and <code>y</code> is -0`;
     if (isPositiveZero(x.value) && isNegativeZero(y.value)) {
       return true;
     }
 
-    yield `Checking if <strong>x</strong> is -0 and <strong>y</strong> is +0`;
+    yield `Checking if <code>x</code> is -0 and <code>y</code> is +0`;
     if (isNegativeZero(x.value) && isPositiveZero(y.value)) {
       return true;
     }
@@ -49,10 +49,10 @@ function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
     return false;
   }
 
-  yield `Checking if <strong>x</strong> is a string`;
+  yield `Checking if <code>x</code> is a string`;
   if (isString(x.value)) {
 
-    yield `Comparing character sequences of <strong>x</strong> and y`;
+    yield `Comparing character sequences of <code>x</code> and y`;
     if (areAllCharsEqualInOrder(x.value, y.value)) {
       return true;
     }
@@ -60,10 +60,10 @@ function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
     return false;
   }
 
-  yield `Checking if <strong>x</strong> is a boolean`;
+  yield `Checking if <code>x</code> is a boolean`;
   if (isBoolean(x.value)) {
 
-    yield `Checking if <strong>x</strong> and <strong>y</strong> are both true or both false`;
+    yield `Checking if <code>x</code> and <code>y</code> are both true or both false`;
     if (areBothTrue(x.value, y.value) || areBothFalse(x.value, y.value)) {
       return true;
     }
@@ -71,7 +71,7 @@ function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
     return false;
   }
 
-  yield `Checking if <strong>x</strong> and <strong>y</strong> are the same object`;
+  yield `Checking if <code>x</code> and <code>y</code> are the same object`;
   if (areEqualReferences(x.value, y.value)) {
     return true;
   }
