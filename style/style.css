@@ -16,12 +16,6 @@ h2 {
 	text-align: center;
 }
 
-pre {
-	background: transparent;
-	display: inline;
-	font-weight: normal;
-}
-
 .grid-flex-cell {
 	padding: 10px;
 	text-align: center;
@@ -58,7 +52,6 @@ pre {
 
 .step .value {
 	font-family: monospace;
-	font-weight: bold;
 }
 
 .step.operation {
@@ -81,4 +74,14 @@ pre {
 .step.operation,
 .step.result {
 	border: 1px solid #e3e3e3;
+}
+
+pre {
+	margin: 0;
+	font-size: 16px;
+}
+
+code.error {
+	background: red;
+	color:#fafafa;
 }

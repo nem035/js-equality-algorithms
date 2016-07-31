@@ -1,5 +1,5 @@
 function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
-  yield `Operation: <pre>${xToHTML(x)} === ${yToHTML(y)}</pre>`;
+  yield `<pre>${xToHTML(x)} === ${yToHTML(y)}</pre>`;
 
   if (!skipFirstStep) {
     yield `Checking if <code>x</code> and <code>y</code> have a different type`;

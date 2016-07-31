@@ -1,6 +1,6 @@
 function *doubleEqualsGenerator(x, y) {
 
-  yield `Operation: <pre>${xToHTML(x)} == ${yToHTML(y)}</pre>`;
+  yield `<pre>${xToHTML(x)} == ${yToHTML(y)}</pre>`;
 
   yield `Checking if <code>x</code> and <code>y</code> have the same type`;
   if (areSameType(x.value, y.value)) {
@@ -63,8 +63,14 @@ function *doubleEqualsGenerator(x, y) {
 
     yield `Checking if <code>x</code> is a string or a number and <code>y</code> is an object`;
     if (isStringOrNumber(x.value) && isObject(y.value)) {
-      yield `Coercing <code>y</code> to a primitive (using <code>${toPrimitiveCoercionMethod(y.value)}</code>)`;
-      y.value = toPrimitive(y.value);
+      yield *toPrimitiveGenerator(y.value);
+
+      try {
+        y.value = toPrimitive(y.value);
+      } catch (e) {
+        return `Throwing: <code class="error">Uncaught TypeError: Cannot convert object to primitive value</code>`;
+      }
+
       y.text = valueToText(y.value);
       return run(x, y, {
         method: doubleEqualsGenerator
@@ -73,7 +79,7 @@ function *doubleEqualsGenerator(x, y) {
 
     yield `Checking if <code>x</code> is an object and <code>y</code> is a string or a number`;
     if (isObject(x.value) && isStringOrNumber(y.value)) {
-      yield `Coercing <code>x</code> to a primitive (using <code>${toPrimitiveCoercionMethod(x.value)}</code>)`;
+      yield *toPrimitiveGenerator(x.value);
       x.value = toPrimitive(x.value);
       x.text = valueToText(x.value);
       return run(x, y, {

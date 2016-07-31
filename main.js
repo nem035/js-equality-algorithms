@@ -31,7 +31,7 @@ function run(x, y, algorithm) {
       clearInterval(interval);
       $('.button-run').prop('disabled', '');
     }
-  }, 600);
+  }, 0);
 }
 
 function step(runner) {
@@ -153,6 +153,9 @@ function copyValue(value) {
   if (isPrimitive(value)) {
     return value;
   }
+  if (isDate(value)) {
+    return new Date(value);
+  }
   if (Array.isArray(value)) {
     return $.extend(true, [], value);
   }
@@ -212,10 +215,27 @@ function getDataType(type) {
   return $(`.nav-wrapper.nav-wrapper-${type} .tabs a.current-item`).attr('data-type');
 }
 
-function toPrimitiveCoercionMethod(obj) {
+function *toPrimitiveGenerator(obj) {
   if (isDate(obj)) {
-    return obj.hasOwnProperty(obj.toString) && isFunction(obj.toString) ? 'toString' : 'valueOf';
+    return `Coercing <code>y</code> to a primitive (using <code>toString</code>)`;
   } else {
-    return obj.hasOwnProperty(obj.valueOf) && isFunction(obj.valueOf) ? 'valueOf' : 'toString';
+    let value;
+
+    const firstMethod = obj.hasOwnProperty('valueOf') ? 'valueOf' : 'toString';
+    yield `Coercing <code>y</code> to a primitive (using <code>${firstMethod}</code>)`;
+    value = obj[firstMethod]();
+    if (isPrimitive(value)) {
+      return true;
+    }
+    yield `Value <code>${valueToText(value)}</code> returned from <code>${firstMethod}</code> is not a primitive`;
+
+    const secondMethod = firstMethod === 'valueOf' ? 'toString' : 'valueOf';
+    yield `Coercing <code>y</code> to a primitive (using <code>${secondMethod}</code>)`;
+    value = obj[secondMethod]();
+    if (isPrimitive(value)) {
+      return true;
+    }
+
+    yield `Value <code>${valueToText(value)}</code> returned from <code>${firstMethod}</code> is not a primitive`;
   }
 }

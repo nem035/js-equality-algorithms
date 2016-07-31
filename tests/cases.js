@@ -61,6 +61,14 @@ var testCaseNonPrimitives = [
       return {};
     }
   },
+  {
+    toString: function() {
+      return {};
+    },
+    valueOf: function() {
+      return {};
+    }
+  },
   function() {},
   function a() { return 1; },
   new Date()

@@ -20,7 +20,7 @@ function defaultValue(x) {
   });
 
   if (!success) {
-    throw new TypeError('Cannot convert object to primitive value');
+    throw new TypeError('Uncaught TypeError: Cannot convert object to primitive value');
   }
 
   return result;
