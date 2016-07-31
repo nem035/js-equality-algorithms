@@ -12,9 +12,11 @@ $(() => {
     const algorithms = getAlgorithms();
     const xDataType = getDataType('x');
     const yDataType = getDataType('y');
-    const x = Object.assign({}, get(getValues(xDataType), 'x'));
-    const y = Object.assign({}, get(getValues(yDataType), 'y'));
-    const algorithm = get(algorithms, 'algorithm');
+    const xValues = getValues(xDataType, 'x');
+    const yValues = getValues(yDataType, 'y');
+    const x = Object.assign({}, extract(xValues, 'x'));
+    const y = Object.assign({}, extract(yValues, 'y'));
+    const algorithm = extract(algorithms, 'algorithm');
 
     run(x, y, algorithm);
   });
@@ -80,12 +82,16 @@ function valueToText(value) {
   if (isUndefined(value)) return 'undefined';
   if (isNegativeZero(value)) return '-0';
   if (isString(value)) return `'${value}'`;
+  if (!isObject(value)) return String(value);
+  if (isFunction(value)) {
+    return String(value)
+      .split('\n')
+      .join('')
+      .replace(/\s+/g, ' ');
+  }
   return JSON.stringify(value, function(key, value) {
-    if (isFunction(value)) {
-      return String(value)
-        .split('\n')
-        .join('')
-        .replace(/\s+/g, ' ');
+    if (isPrimitive(value) || isFunction(value)) {
+      return valueToText(value);
     }
     return value;
   }, 4).split('"').join('');
@@ -96,9 +102,8 @@ function valueToHTML(text, type) {
 }
 
 function initValueLists() {
-  const values = getValues('primitive');
-  buildValueList('x', values);
-  buildValueList('y', values);
+  buildValueList('x', getValues('primitive', 'x'));
+  buildValueList('y', getValues('primitive', 'y'));
 }
 
 function buildValueList(type, values) {
@@ -112,7 +117,7 @@ function buildValueList(type, values) {
   });
 }
 
-function get(values, type) {
+function extract(values, type) {
   const id = $(`.${type}`).val();
   return values.find(v => v.id === id);
 }
@@ -124,18 +129,19 @@ function scrollToBottom(elem) {
 
 function valueBuilderFactory(dataType) {
   let values;
-  const temp = (dataType === 'primitive') ? getPrimitives() : getNonPrimitives();
+  const temp = (dataType === 'primitive') ? testCasePrimitives : testCaseNonPrimitives;
 
   return function build() {
+    // values are cached
     if (!isUndefined(values)) {
       return values;
     }
 
-    values = temp.map(function(value, idx) {
+    values = temp.map((value, idx) => {
       return {
         id: `${idx}`,
         text: valueToText(value),
-        value
+        value: copyValue(value)
       };
     });
 
@@ -143,19 +149,36 @@ function valueBuilderFactory(dataType) {
   };
 }
 
-const getPrimitiveValues = valueBuilderFactory('primitive');
-const getNonPrimitiveValues = valueBuilderFactory('non-primitive');
-
-function getValues(dataType) {
-  return (dataType === 'primitive') ? getPrimitiveValues() : getNonPrimitiveValues();
+function copyValue(value) {
+  if (isPrimitive(value)) {
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return $.extend(true, [], value);
+  }
+  return $.extend(true, {}, value);
 }
 
-function getPrimitives() {
-  return testCasePrimitives.slice();
+const getPrimitiveValuesForX = valueBuilderFactory('primitive');
+const getNonPrimitiveValuesForX = valueBuilderFactory('non-primitive');
+const getPrimitiveValuesForY = valueBuilderFactory('primitive');
+const getNonPrimitiveValuesForY = valueBuilderFactory('non-primitive');
+
+function getValueGettersForType(type) {
+  if (type === 'x') {
+    return {
+      'primitive': getPrimitiveValuesForX,
+      'non-primitive': getNonPrimitiveValuesForX
+    };
+  }
+  return {
+    'primitive': getPrimitiveValuesForY,
+    'non-primitive': getNonPrimitiveValuesForY
+  };
 }
 
-function getNonPrimitives() {
-  return testCaseNonPrimitives.slice();
+function getValues(dataType, type) {
+  return getValueGettersForType(type)[dataType]();
 }
 
 function getAlgorithms() {
@@ -180,7 +203,7 @@ function setupNavTab(type) {
   tabs.find('a').click(function() {
     tabs.find('a').toggleClass('current-item');
     const dataType = tabs.find('a.current-item').attr('data-type');
-    const values = getValues(dataType);
+    const values = getValues(dataType, type);
     buildValueList(type, values);
   });
 }
