@@ -80,7 +80,13 @@ function *doubleEqualsGenerator(x, y) {
     yield `Checking if <code>x</code> is an object and <code>y</code> is a string or a number`;
     if (isObject(x.value) && isStringOrNumber(y.value)) {
       yield *toPrimitiveGenerator(x.value);
-      x.value = toPrimitive(x.value);
+
+      try {
+        x.value = toPrimitive(x.value);
+      } catch (e) {
+        return `Throwing: <code class="error">Uncaught TypeError: Cannot convert object to primitive value</code>`;
+      }
+      
       x.text = valueToText(x.value);
       return run(x, y, {
         method: doubleEqualsGenerator
