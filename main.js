@@ -8,6 +8,7 @@ $(() => {
   $('.button-run').click(function() {
     $('.button-run').prop('disabled', 'true');
     $('.steps').empty();
+    $('p.text-info').hide();
 
     const algorithms = getAlgorithms();
     const xDataType = getDataType('x');
@@ -24,41 +25,66 @@ $(() => {
 
 function run(x, y, algorithm) {
   const runner = algorithm.method(x, y, algorithm.skipFirstStep);
+  const isAnimated = $('input[type="checkbox"]').is(':checked');
 
-  showOperation(runner.next().value);
-  const interval = setInterval(() => {
-    if (step(runner)) {
-      clearInterval(interval);
-      $('.button-run').prop('disabled', '');
+  showOperation(runner.next().value, isAnimated);
+
+  if (isAnimated) {
+    const interval = setInterval(() => {
+      if (step(runner, isAnimated)) {
+        clearInterval(interval);
+        finish();
+      }
+    }, 600);
+  } else {
+    while (true) {
+      if (step(runner, isAnimated)) {
+        finish();
+        scrollToBottom(document.body);
+        break;
+      }
     }
-  }, 0);
+  }
 }
 
-function step(runner) {
+function step(runner, isAnimated) {
   const { value } = runner.next();
+
   if (isBoolean(value)) {
-    showResult(value);
+    showResult(value, isAnimated);
     return true;
   }
-  if (isString(value)) {
-    showStep(value);
+
+  if (isUndefined(value)) {
+    return true;
   }
+
+  if (isString(value)) {
+    showStep(value, isAnimated);
+  }
+
   return false;
 }
 
-function showOperation(text) {
-  showStep(text).addClass('operation');
+function finish() {
+  $('.button-run').prop('disabled', '');
 }
 
-function showStep(result) {
+function showOperation(text, isAnimated) {
+  showStep(text, isAnimated).addClass('operation');
+}
+
+function showStep(result, isAnimated) {
   const step = buildStep(result);
   $('.steps').append(step);
-  scrollToBottom(document.body);
+  if (isAnimated) {
+    scrollToBottom(document.body);
+  }
   return step;
 }
 
-function showResult(result) {
-  showStep(result).addClass('result')
+function showResult(result, isAnimated) {
+  showStep(result, isAnimated).addClass('result')
     .addClass(result ? 'true' : 'false');
 }
 
@@ -122,10 +148,21 @@ function extract(values, type) {
   return values.find(v => v.id === id);
 }
 
-function scrollToBottom(elem) {
-  const $elem = $(elem);
-  $elem.scrollTop($elem.prop('scrollHeight'));
+function scrollerFactory() {
+  let isScrolling = false;
+  return function(elem) {
+    if (!isScrolling) {
+      isScrolling = true;
+      const $elem = $(elem);
+      $elem.animate({
+        scrollTop: $elem.prop('scrollHeight')
+      }, '100', 'swing', function() {
+        isScrolling = false;
+      });
+    }
+  }
 }
+const scrollToBottom = scrollerFactory();
 
 function valueBuilderFactory(dataType) {
   let values;

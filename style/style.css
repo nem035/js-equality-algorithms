@@ -43,6 +43,8 @@ h2 {
 }
 
 .card.output {
+	min-height: 370px;
+	position: relative;
 }
 
 .step {
@@ -83,5 +85,14 @@ pre {
 
 code.error {
 	background: red;
-	color:#fafafa;
+	color: #fafafa;
+}
+
+.label-animation {
+	position: absolute;
+	right: 10px;
+}
+
+input[type=checkbox] {
+	margin-right: 0 !important;
 }
