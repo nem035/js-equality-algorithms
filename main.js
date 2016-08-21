@@ -253,21 +253,17 @@ function getDataType(type) {
 }
 
 function *toPrimitiveGenerator(obj) {
-  if (isDate(obj)) {
-    return `Coercing <code>y</code> to a primitive (using <code>toString</code>)`;
-  } else {
-    const methods = ['valueOf', 'toString'];
+  const methods = isDate(obj) ? ['toString', 'valueOf'] : ['valueOf', 'toString'];
 
-    for (let i = 0; i < methods.length; i++) {
-      let method = methods[i];
-      if (obj.hasOwnProperty(method)) {
-        yield `Coercing <code>y</code> to a primitive (using <code>${method}</code>)`;
-        let value = obj[method]();
-        if (isPrimitive(value)) {
-          return true;
-        }
-        yield `Value <code>${valueToText(value)}</code> returned from <code>${method}</code> is not a primitive`;
+  for (let i = 0; i < methods.length; i++) {
+    let method = methods[i];
+    if (isFunction(obj[method])) {
+      yield `Coercing <code>y</code> to a primitive (using <code>${method}</code>)`;
+      let value = obj[method]();
+      if (isPrimitive(value)) {
+        return true;
       }
+      yield `Value <code>${valueToText(value)}</code> returned from <code>${method}</code> is not a primitive`;
     }
   }
 }
