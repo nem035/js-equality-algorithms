@@ -256,23 +256,18 @@ function *toPrimitiveGenerator(obj) {
   if (isDate(obj)) {
     return `Coercing <code>y</code> to a primitive (using <code>toString</code>)`;
   } else {
-    let value;
+    const methods = ['valueOf', 'toString'];
 
-    const firstMethod = obj.hasOwnProperty('valueOf') ? 'valueOf' : 'toString';
-    yield `Coercing <code>y</code> to a primitive (using <code>${firstMethod}</code>)`;
-    value = obj[firstMethod]();
-    if (isPrimitive(value)) {
-      return true;
+    for (let i = 0; i < methods.length; i++) {
+      let method = methods[i];
+      if (obj.hasOwnProperty(method)) {
+        yield `Coercing <code>y</code> to a primitive (using <code>${method}</code>)`;
+        let value = obj[method]();
+        if (isPrimitive(value)) {
+          return true;
+        }
+        yield `Value <code>${valueToText(value)}</code> returned from <code>${method}</code> is not a primitive`;
+      }
     }
-    yield `Value <code>${valueToText(value)}</code> returned from <code>${firstMethod}</code> is not a primitive`;
-
-    const secondMethod = firstMethod === 'valueOf' ? 'toString' : 'valueOf';
-    yield `Coercing <code>y</code> to a primitive (using <code>${secondMethod}</code>)`;
-    value = obj[secondMethod]();
-    if (isPrimitive(value)) {
-      return true;
-    }
-
-    yield `Value <code>${valueToText(value)}</code> returned from <code>${firstMethod}</code> is not a primitive`;
   }
 }
