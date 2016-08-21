@@ -52,7 +52,7 @@ function *tripleEqualsGenerator(x, y, skipFirstStep = false) {
   yield `Checking if <code>x</code> is a string`;
   if (isString(x.value)) {
 
-    yield `Comparing character sequences of <code>x</code> and y`;
+    yield `Comparing character sequences of <code>x</code> and <code>y</code>`;
     if (areAllCharsEqualInOrder(x.value, y.value)) {
       return true;
     }
