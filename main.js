@@ -115,6 +115,9 @@ function valueToText(value) {
       .join('')
       .replace(/\s+/g, ' ');
   }
+  if (value instanceof Boolean) return `new Boolean(${value})`;
+  if (value instanceof String) return `new String(${value})`;
+  if (value instanceof Number) return `new Number(${value})`;
   return JSON.stringify(value, function(key, value) {
     if (isPrimitive(value) || isFunction(value)) {
       return valueToText(value);
@@ -195,6 +198,15 @@ function copyValue(value) {
   }
   if (Array.isArray(value)) {
     return $.extend(true, [], value);
+  }
+  if (value instanceof Boolean) {
+    return new Boolean(value.valueOf());
+  }
+  if (value instanceof String) {
+    return new String(value.valueOf());
+  }
+  if (value instanceof Number) {
+    return new Number(value.valueOf());
   }
   return $.extend(true, {}, value);
 }

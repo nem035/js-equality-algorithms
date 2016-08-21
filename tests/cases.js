@@ -35,6 +35,10 @@ var testCaseNonPrimitives = [
   ['1'],
   {},
   { a: 1 },
+  new Boolean(false),
+  new Boolean(true),
+  new String(''),
+  new Number(0),
   {
     valueOf: function() {
       return 'Custom string from valueOf';
